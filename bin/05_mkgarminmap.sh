@@ -29,7 +29,7 @@ COPYRIGHT="${COPY} Para más detalle vea ${COPY_URL}."
 # Selecciona el país, si no se pasan argumentos se procesan todos los países.
 # PAIS = [all | argentina | bolivia | brazil | chile | paraguay | uruguay]
 if [[ "${1}" == "" || "${1}" == "all" ]]; then
-    PAIS="south-america"
+    PAIS="south-america-latest"
     DESCRIPTION="Argentina y resto del cono sur - ${FECHA}"
   else
     PAIS="${1}"
@@ -45,7 +45,7 @@ if [ $(ls -1 ${WORKDIR}/bounds/ |  wc -l) == 0 ]; then
 
   java -Xmx1536m -cp ${MKGMAP} \
   uk.me.parabola.mkgmap.reader.osm.boundary.BoundaryPreprocessor\
-  ${PAIS}-latest-boundaries.o5m bounds/
+  ${PAIS}-boundaries.o5m bounds/
 
   FILES=$(ls -1 ${WORKDIR}/bounds/ |  wc -l)
 
