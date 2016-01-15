@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 PAIS=peru
 
 cd ~/garmin-osm
@@ -13,4 +15,4 @@ cd ~/garmin-osm
 ./bin/06_gensum.sh ${PAIS}
 ./bin/07_create_json_data.sh ${PAIS}
 
-mv gmapsupp.img /home/humitos/apps/argentinaenpython.com.ar/mapas-de-openstreetmap-para-garmin/
+cp gmapsupp.img /home/humitos/apps/argentinaenpython.com.ar/mapas-de-openstreetmap-para-garmin/
