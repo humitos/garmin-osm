@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DATA_JSON=/home/humitos/apps/argentinaenpython.com.ar/mapas-de-openstreetmap-para-garmin/osm-data.json
+DATA_JSON=/home/humitos/apps/argentinaenpython.com.ar/mapas-de-openstreetmap-para-garmin/${PAIS}_osm-data.json
 
-echo '{"{{size}}": "[[size]]", "{{date}}": "[[date]]", "{{md5}}": "[[md5]]", "{{sha1}}": "[[sha1]]", "{{sha256}}": "[[sha256]]"}' > ${DATA_JSON}
+echo '{"{{'${PAIS}'_size}}": "[[size]]", "{{'${PAIS}'_date}}": "[[date]]", "{{'${PAIS}'_md5}}": "[[md5]]", "{{'${PAIS}'_sha1}}": "[[sha1]]", "{{'${PAIS}'_sha256}}": "[[sha256]]"}'
 
 
 rpl --backup "[[size]]" "`ls -lh gmapsupp.img | awk '{printf $5, " "'}`" ${DATA_JSON} 

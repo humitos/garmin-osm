@@ -15,4 +15,4 @@ cd ~/garmin-osm
 ./bin/06_gensum.sh ${PAIS}
 ./bin/07_create_json_data.sh ${PAIS}
 
-cp gmapsupp.img /home/humitos/apps/argentinaenpython.com.ar/mapas-de-openstreetmap-para-garmin/
+mv gmapsupp.img /home/humitos/apps/argentinaenpython.com.ar/mapas-de-openstreetmap-para-garmin/${PAIS}
