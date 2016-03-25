@@ -82,7 +82,7 @@ java -Xmx2048m -enableassertions -Dlog.config=${WORKDIR}/logging.properties \
 --housenumbers \
 --x-split-name-index \
 --latin1 \
---drive-on=detect,right \
+--drive-on=right \
 --generate-sea \
 --report-similar-arcs \
 --add-pois-to-areas \
@@ -116,7 +116,7 @@ java -Xmx2048m -enableassertions -Dlog.config=logging.properties \
 -jar ${MKGMAP} \
 --description="${DESCRIPTION}" \
 --license-file=licencia.txt \
---overview-mapname="Argentina" \
+--overview-mapname="${PAIS}" \
 --family-id=980 \
 --family-name="OpenStreetMap" \
 --housenumbers \
