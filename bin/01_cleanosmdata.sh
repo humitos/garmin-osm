@@ -53,6 +53,8 @@ for pais in ${PAISES}; do
       rm -f ${pais}/*.zip
       rm -f bounds/*
       rm -rf sea*
+      rm -f ${pais}.o5m
+      rm -f ${pais}-latest.o5m
     fi
 
   fi
