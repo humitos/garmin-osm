@@ -11,6 +11,8 @@
 # wget: http://www.gnu.org/software/wget/
 # osmconvert: http://wiki.openstreetmap.org/wiki/osmconvert
 
+set -e
+
 WORKDIR=`pwd`
 BUNZIP2="/bin/bunzip2 --force"
 GET="/usr/bin/wget --continue"
@@ -31,6 +33,7 @@ HASH_MEM="--hash-memory=128"
 G='\E[1;32;40m'
 Y='\E[1;33;40m'
 W='\E[0;38;40m'
+W='\e[0m'  # vuelve los colores a la normalidad
 
 # Opciones para cortar el cono sur de América.
 COORD="-77,-56,-49,-16"
@@ -97,106 +100,28 @@ if [[ "${1}" == "" || "${1}" == "all" ]]; then
   else
     PAIS="${1}"
     BOX="-B=${PAIS}/${PAIS}.poly"
+    URL="http://download.geofabrik.de/south-america"
 fi
 
-# Descarga south-america-latest.o5m
-if [ ! -e south-america-latest.o5m ]; then
+echo "------------------------------------------------------------------------"
+echo "Descargando ${URL}/${PAIS}-latest.osm.bz2"
+echo "------------------------------------------------------------------------"
+echo
 
-    echo "------------------------------------------------------------------------"
-    echo "Descargando ${URL}/south-america-latest.osm.bz2"
-    echo "------------------------------------------------------------------------"
-    echo
+${GET} ${URL}/${PAIS}-latest.osm.bz2
 
-    ${GET} ${URL}/south-america-latest.osm.bz2
+echo "------------------------------------------------------------------------"
+echo "Generando ${PAIS} con osmconvert desde: "
+echo "${URL_PAIS}/${PAIS}-latest.osm.bz2"
+echo "Area definida por: ${BOX}"
+echo "------------------------------------------------------------------------"
+echo
 
-    echo "------------------------------------------------------------------------"
-    echo "Generando ${PAIS} con osmconvert desde: "
-    echo "${URL_PAIS}/south-america-latest.osm.bz2"
-    echo "Area definida por: ${BOX}"
-    echo "------------------------------------------------------------------------"
-    echo
-
-    bzcat south-america-latest.osm.bz2 | ${OSMCONVERT} - ${HASH_MEM} \
-    --verbose --out-o5m > south-america-latest.o5m
-
-    rm -f south-america-latest.osm.bz2
-    ${GET} ${OSMDAYSTATE}
-    mv state.txt state.txt.old
-
-  else
-
-    echo "------------------------------------------------------------------------"
-    echo "Actualizando ${PAIS} con osmconvert desde: "i
-    echo "${PLANETOSM}."
-    echo "Area definida por: ${BOX}"
-    echo "------------------------------------------------------------------------"
-    echo
-
-    ${GET} ${OSMDAYSTATE}
-
-    LATEST=`awk -F \= /sequenceNumber/'{print $2}' state.txt`
-    OLD=`awk -F \= /sequenceNumber/'{print $2}' state.txt.old`
-    I=1
-    N=$((LATEST - OLD))
-
-    if [ ${LATEST} != ${OLD} ]; then
-      OLD=$((OLD + 1))
-      SBOX="-B=south-america/south-america.poly"
-      OSMCONVERT_OPTS="--complete-ways --complex-ways --drop-broken-refs"
-      rm -f ${PAIS}.o5m
-
-      for i in `seq ${OLD} ${LATEST}`; do
-
-        # La URL para la organización de archivos diferenciales es del tipo: 
-        # http://planet.openstreetmap.org/replication/day/AAA/BBB/CCC.osc.gz
-        # Donde el número de secuencia es N = AAA*1000000 + BBB*1000 + CCC.
-        # Por ejemplo para un archivo cuyo número de secuencia es 60277 le
-        # corresponde una locación en /000/060/277.
-        #
-        # Para formar la URL es necesario saber con cuantos ceros deben anteponerse
-        # al número de secuencia obtenido para la variable ${i}.
-        NUMBER_CEROS=$((9 - ${#i}))
-        CEROS=""
-
-        for n in $(seq ${NUMBER_CEROS}); do 
-          CEROS="0${CEROS}"
-        done
-
-        # Se genera la locación del archivo a descargar ${LOCATION} y el nombre
-        # del archivo ${FILE} sin la extensión.
-        LOCATION=$(echo "${CEROS}${i}" | sed -e 's/.\{3\}/\/&/g')
-        FILE=$(echo "${LOCATION}" | awk -F \/ //'{print $(NF)}')
-
-        STEPS="${Y}${I}${W} de ${Y}${N}${W}"
-        echo -e ">>> Actualizando cambios (${STEPS}) a ${G}versión ${i}${W}"
-
-        ${GET} ${RDAY}${LOCATION}.osc.gz
-
-        if [ -e ${FILE}.osc.gz ]; then
-          gunzip --decompress --force ${FILE}.osc.gz
-
-          ${OSMCONVERT} ${HASH_MEM} ${OSMCONVERT_OPTS} ${SBOX} \
-          --verbose --merge-versions south-america-latest.o5m ${FILE}.osc --out-o5m \
-          > south-america-latest_new.o5m
-
-          mv --force south-america-latest_new.o5m south-america-latest.o5m
-          rm --force ${FILE}.osc
-
-          NOW=$((OLD + I - 1))
-          sed 's/'${LATEST}'/'${NOW}'/g' state.txt > state.txt.old
-
-        fi
-
-        I=$((I + 1))
-
-      done
-
-    fi
-
-fi
+bzcat ${PAIS}-latest.osm.bz2 | ${OSMCONVERT} - ${HASH_MEM} \
+      --verbose --out-o5m > ${PAIS}-latest.o5m
 
 ${OSMCONVERT} ${HASH_MEM} ${BOX} --drop-version --verbose \
-south-america-latest.o5m --out-o5m > ${PAIS}.o5m
+${PAIS}-latest.o5m --out-o5m > ${PAIS}.o5m
 
 
 

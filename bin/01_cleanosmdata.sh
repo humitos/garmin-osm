@@ -9,7 +9,7 @@
 
 
 
-PAISES="south-america argentina bolivia brazil chile paraguay uruguay"
+PAISES="south-america argentina bolivia brazil chile paraguay uruguay ecuador peru"
 
 
 ALL="$1"

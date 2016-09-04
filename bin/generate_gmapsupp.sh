@@ -7,7 +7,7 @@ PAIS=$1
 cd ~/garmin-osm
 
 ./bin/build_mkgmap.sh
-./bin/01_cleanosmdata.sh
+./bin/01_cleanosmdata.sh all
 ./bin/02_getosmdata.sh ${PAIS}
 ./bin/03_boundaries.sh ${PAIS}
 ./bin/04_splitter.sh ${PAIS}
