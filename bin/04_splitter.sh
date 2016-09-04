@@ -16,6 +16,7 @@ SPLITTER="${WORKDIR}/splitter/dist/splitter.jar"
 G='\E[1;32;40m'
 Y='\E[1;33;40m'
 W='\E[0;38;40m'
+W='\e[0m'  # vuelve los colores a la normalidad
 
 COMMON_OPTIONS="--keep-complete=true --wanted-admin-level=8 --max-areas=512"
 COMMON_OPTIONS="${COMMON_OPTIONS} --max-nodes=160000 --no-trim"

@@ -19,6 +19,7 @@ MKGMAP="${WORKDIR}/mkgmap/dist/mkgmap.jar"
 G='\E[1;32;40m'
 Y='\E[1;33;40m'
 W='\E[0;38;40m'
+W='\e[0m'  # vuelve los colores a la normalidad
 
 COPY="Colaboradores de OpenStreetMap, ODbL."
 COPY_URL="http://www.openstreetmap.org/copyright"
