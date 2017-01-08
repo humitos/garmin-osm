@@ -14,6 +14,7 @@ cd ~/garmin-osm
 ./bin/05_mkgarminmap.sh ${PAIS}
 ./bin/06_gensum.sh ${PAIS}
 ./bin/07_create_json_data.sh ${PAIS}
+./bin/gengpx.sh ${PAIS}
 
 mkdir -p /home/humitos/apps/argentinaenpython.com.ar/mapas-de-openstreetmap-para-garmin/${PAIS}
 mv gmapsupp.img /home/humitos/apps/argentinaenpython.com.ar/mapas-de-openstreetmap-para-garmin/${PAIS}

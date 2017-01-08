@@ -10,12 +10,33 @@
 # osmconvert: http://wiki.openstreetmap.org/wiki/osmconvert
 # osmfilter: http://wiki.openstreetmap.org/wiki/osmfilter
 
+# Uso:
+# El script debe invocarse directamente sobre el directorio raíz de las siguientes
+# maneras:
+#
+# bin/03_boundaries.sh
+#	Genera los límites político-administrativos del cono sur.
+#
+# bin/03_boundaries.sh país
+# 	Genera los límites político-administrativos para el país seleccionado. El
+#	valor de país puede ser uno de los siguientes:
+#		argentina
+#		bolivia
+#		brazil
+#		chile
+#		colombia
+#		ecuador
+#		paraguay
+#		peru
+#		uruguay
+#
+
 WORKDIR=`pwd`
 OSMCONVERT="${WORKDIR}/bin/osmconvert"
 OSMFILTER="${WORKDIR}/bin/osmfilter"
 
-# Uso de memoria: 128 MiB
-HASH_MEM="--hash-memory=128"
+# Uso de memoria: 256 MiB
+HASH_MEM="--hash-memory=256"
 
 
 

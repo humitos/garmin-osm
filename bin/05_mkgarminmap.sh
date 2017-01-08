@@ -32,9 +32,11 @@ COPYRIGHT="${COPY} Para más detalle vea ${COPY_URL}."
 if [[ "${1}" == "" || "${1}" == "all" ]]; then
     PAIS="south-america-latest"
     DESCRIPTION="Argentina y resto del cono sur - ${FECHA}"
+    JAVA_MEM="-Xmx4096m"
   else
     PAIS="${1}"
     DESCRIPTION="${PAIS} - ${FECHA}"
+    JAVA_MEM="-Xmx1024m"
 fi
 
 # Verifica si los límites ya fueron creados previamente o deben crearse.
@@ -44,7 +46,7 @@ if [ $(ls -1 ${WORKDIR}/bounds/ |  wc -l) == 0 ]; then
   echo "------------------------------------------------------------------------"
   echo
 
-  java -Xmx1536m -cp ${MKGMAP} \
+  java ${JAVA_MEM} -cp ${MKGMAP} \
   uk.me.parabola.mkgmap.reader.osm.boundary.BoundaryPreprocessor\
   ${PAIS}-boundaries.o5m bounds/
 
@@ -66,7 +68,7 @@ echo "Generando mapa de ${PAIS} con mkgmap.jar."
 echo "------------------------------------------------------------------------"
 echo
 
-java -Xmx2048m -enableassertions -Dlog.config=${WORKDIR}/logging.properties \
+java ${JAVA_MEM} -enableassertions -Dlog.config=${WORKDIR}/logging.properties \
 -jar ${MKGMAP} ${OPTIONS} \
 --copyright-message="${COPY}" \
 --product-id=${PRODUCTID} \
@@ -113,7 +115,7 @@ echo "${DESCRIPTION}" > licencia.txt
 echo "${COPYRIGHT}" >> licencia.txt
 echo -e ">>> Creando imagen ${G}gmapsupp.img${W}."
 
-java -Xmx2048m -enableassertions -Dlog.config=logging.properties \
+java ${JAVA_MEM} -enableassertions -Dlog.config=logging.properties \
 -jar ${MKGMAP} \
 --description="${DESCRIPTION}" \
 --license-file=licencia.txt \
