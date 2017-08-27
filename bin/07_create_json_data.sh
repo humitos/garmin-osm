@@ -2,7 +2,8 @@
 
 PAIS=$1
 DATA_JSON=/home/humitos/apps/argentinaenpython.com.ar/mapas-de-openstreetmap-para-garmin/${PAIS}_osm-data.json
-GMAPSUPP=../gmapsupp.img
+WORKDIR=`pwd`
+GMAPSUPP=${WORKDIR}/gmapsupp.img
 
 echo '{"{{'${PAIS}'_size}}": "[[size]]", "{{'${PAIS}'_date}}": "[[date]]", "{{'${PAIS}'_md5}}": "[[md5]]", "{{'${PAIS}'_sha1}}": "[[sha1]]", "{{'${PAIS}'_sha256}}": "[[sha256]]"}' > ${DATA_JSON}
 
