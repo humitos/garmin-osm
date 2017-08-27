@@ -12,10 +12,10 @@
 
 WORKDIR=`pwd`
 
-
-OSMCONVERT_URL="http://m.m.i24.cc/osmconvert.c"
-OSMFILTER_URL="http://m.m.i24.cc/osmfilter.c"
-PBFTOOSM_URL="http://m.m.i24.cc/pbftoosm.c"
+# http://wiki.openstreetmap.org/wiki/Osmconvert
+OSMCONVERT_URL="http://m.m.i24.cc/osmconvert32"
+OSMFILTER_URL="http://m.m.i24.cc/osmfilter32"
+PBFTOOSM_URL="http://m.m.i24.cc/pbftoosm32"
 
 OSMCONVERT="${WORKDIR}/bin/osmconvert"
 OSMFILTER="${WORKDIR}/bin/osmfilter"
@@ -41,7 +41,12 @@ svn export http://svn.mkgmap.org.uk/splitter/trunk splitter
 cd ${WORKDIR}/splitter
 ant
 
+# Descargar version pre-compilada
+wget -O ${OSMCONVERT} ${OSMCONVERT_URL}
+wget -O ${OSMFILTER} ${OSMFILTER_URL}
+wget -O ${PBFTOOSM} ${PBFTOOSM_URL}
 
-wget -O - ${OSMCONVERT_URL} | cc -x c - -lz -O3 -o  ${OSMCONVERT} &>/dev/null
-wget -O -  ${OSMFILTER_URL} | cc -x c - -O3 -o ${OSMFILTER} &>/dev/null
-wget -O - ${PBFTOOSM_URL} |  cc -x c - -lz -O3 -o ${PBFTOOSM} &>/dev/null
+# Permisos de ejecución
+chmod +x ${OSMCONVERT}
+chmod +x ${OSMFILTER}
+chmod +x ${PBFTOOSM}
