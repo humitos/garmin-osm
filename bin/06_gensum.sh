@@ -6,7 +6,7 @@
 # Distributed under the terms of the GNU General Public License v3
 #
 
-
+WORKDIR=`pwd`
 
 # Función para generar sumas MD5, SHA1, SHA256, etc.
 # NAME: nombre del programa que invoca.
@@ -24,4 +24,4 @@ gensum() {
 
 }
 
-gensum "gmapsupp.img"
+gensum "${WORKDIR}/gmapsupp.img"
